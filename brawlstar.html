@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DEVICE COMPROMISED</title>
+<style>
+body{
+  background:black;
+  color:lime;
+  font-family:monospace;
+  margin:0;
+  overflow:hidden;
+}
+#main{padding:20px;}
+.red{color:red;}
+.big{font-size:45px;}
+
+#count{
+ position:absolute;
+ top:10px;
+ right:20px;
+ font-size:60px;
+ color:red;
+}
+
+#webcam{
+ position:absolute;
+ bottom:20px;
+ right:20px;
+ width:240px;
+ height:180px;
+ border:3px solid red;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ color:red;
+ background:#111;
+}
+
+.bar{
+ width:80%;
+ height:20px;
+ border:1px solid red;
+ margin-top:20px;
+}
+.fill{
+ height:100%;
+ width:0%;
+ background:red;
+}
+
+.flash{
+ animation:flash 0.2s infinite;
+}
+@keyframes flash{
+ 50%{background:#200;}
+}
+</style>
+</head>
+
+<body onclick="goFS()">
+
+<div id="count">20</div>
+
+<div id="main">
+<h1 class="red big">⚠ CRITICAL SYSTEM BREACH ⚠</h1>
+<p id="text"></p>
+
+<div class="bar"><div class="fill" id="progress"></div></div>
+</div>
+
+<div id="webcam">📷 RECORDING...</div>
+
+<script>
+let messages=[
+"[+] Connecting to target device...",
+"[+] IP address logged",
+"[+] Location traced",
+"[+] Accessing files...",
+"[+] Photos FOUND",
+"[+] Messages FOUND",
+"[+] Passwords FOUND",
+"[+] Activating webcam...",
+"[+] Uploading data..."
+];
+
+let i=0;
+function type(){
+ if(i<messages.length){
+  let line=messages[i];
+  let j=0;
+  let inter=setInterval(()=>{
+   document.getElementById("text").innerHTML+=line[j];
+   j++;
+   if(j>=line.length){
+    clearInterval(inter);
+    document.getElementById("text").innerHTML+="<br>";
+    i++;
+    setTimeout(type,200);
+   }
+  },15);
+ }
+}
+type();
+
+// progress bar
+let p=0;
+let prog=setInterval(()=>{
+ p+=2;
+ document.getElementById("progress").style.width=p+"%";
+ if(p>=100) clearInterval(prog);
+},200);
+
+// countdown
+let t=20;
+let c=setInterval(()=>{
+ t--;
+ document.getElementById("count").innerText=t;
+
+ if(t<=5){
+  document.body.classList.add("flash");
+ }
+
+ if(t<=0){
+  clearInterval(c);
+
+  document.body.innerHTML=`
+  <h1 style="color:white;text-align:center;margin-top:20%;font-size:60px;">
+  😂 YOU GOT PRANKED 😂
+  </h1>
+  <p style="color:gray;text-align:center;">nothing was hacked lol</p>
+  `;
+ }
+},1000);
+
+// fullscreen
+function goFS(){
+ let e=document.documentElement;
+ if(e.requestFullscreen){e.requestFullscreen();}
+}
+</script>
+
+</body>
+</html>
